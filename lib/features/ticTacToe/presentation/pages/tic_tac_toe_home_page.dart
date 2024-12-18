@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:games/features/ticTacToe/presentation/pages/tic_tac_toe_instructions_page.dart';
 import 'package:games/features/ticTacToe/presentation/pages/tic_tac_toe_page.dart';
 import 'package:games/features/ticTacToe/presentation/widgets/button_list_games_widget.dart';
 
@@ -38,7 +39,13 @@ class _TicTacToeHomePageState extends State<TicTacToeHomePage> {
                 ButtonOptionWidget(
                   icon: Icons.help_outline,
                   title: "Instruções",
-                  onPressed: () => {},
+                  onPressed: () => {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const TicTacToeInstructionsPage(),
+                      ),
+                    )
+                  },
                 )
               ],
             ),
