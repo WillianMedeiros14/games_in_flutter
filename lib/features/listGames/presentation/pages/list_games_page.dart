@@ -22,18 +22,25 @@ class _ListGamesPageState extends State<ListGamesPage> {
       ),
     );
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Todos os jogos",
+          style: TextStyle(
+            fontSize: 18,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 16),
-              const Text(
-                "Todos os jogos",
-                style: TextStyle(fontSize: 16),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: ButtonListGamesWidget(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              spacing: 16,
+              children: [
+                ButtonListGamesWidget(
+                  title: "Jogo da velha",
+                  pathIcon: 'assets/icons/jogo_da_velha.png',
                   onPressed: () => {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -42,8 +49,19 @@ class _ListGamesPageState extends State<ListGamesPage> {
                     )
                   },
                 ),
-              )
-            ],
+                ButtonListGamesWidget(
+                  title: "Sucuri",
+                  pathIcon: 'assets/icons/snake.png',
+                  onPressed: () => {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const TicTacToeHomePage(),
+                      ),
+                    )
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),
