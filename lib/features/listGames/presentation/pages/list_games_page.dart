@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:games/features/listGames/presentation/widgets/button_list_games_widget.dart';
-import 'package:games/features/ticTacToe/home/presentation/pages/tic_tac_toe_page.dart';
+import 'package:games/features/ticTacToe/presentation/pages/tic_tac_toe_page.dart';
 import 'package:flutter/services.dart';
 
 class ListGamesPage extends StatefulWidget {

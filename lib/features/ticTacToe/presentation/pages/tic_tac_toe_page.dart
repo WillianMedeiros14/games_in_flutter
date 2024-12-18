@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:games/features/ticTacToe/home/presentation/widgets/button_tic_tac_toe_widget.dart';
-import 'package:games/features/ticTacToe/home/presentation/widgets/player_widget.dart';
-import 'package:games/features/ticTacToe/home/presentation/widgets/winning_line_painter_widget.dart';
+import 'package:games/features/ticTacToe/presentation/widgets/button_tic_tac_toe_widget.dart';
+import 'package:games/features/ticTacToe/presentation/widgets/player_widget.dart';
+import 'package:games/features/ticTacToe/presentation/widgets/winning_line_painter_widget.dart';
 
 class TicTacToePage extends StatefulWidget {
   const TicTacToePage({super.key});
