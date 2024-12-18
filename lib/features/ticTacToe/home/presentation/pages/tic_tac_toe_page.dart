@@ -16,6 +16,11 @@ class _TicTacToePageState extends State<TicTacToePage> {
     [null, null, null],
   ];
 
+  final String player1 = "Willian";
+  final String player2 = "Carlos";
+  final String player1Type = "X";
+  final String player2Type = "O";
+
   String currentPlayer = 'X';
   List<int>? winningLine;
   int? draggingPiece;
@@ -31,7 +36,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
     if (board[row][col] == null && canAddNewPiece) {
       setState(() {
         board[row][col] = currentPlayer;
-        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+        currentPlayer = (currentPlayer == 'X') ? player2Type : player1Type;
       });
 
       winnerCheck();
@@ -136,7 +141,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
 
       setState(() {
         board[row][col] = currentPlayer;
-        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+        currentPlayer = (currentPlayer == 'X') ? player2Type : player1Type;
         board[startRow][startCol] = null;
         winnerCheck();
       });
@@ -212,12 +217,25 @@ class _TicTacToePageState extends State<TicTacToePage> {
                 ],
               ),
               const SizedBox(height: 16),
-              Text(
-                'Jogador Atual: $currentPlayer',
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                spacing: 10,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  PlayerWidget(
+                    typeButton: player1Type,
+                    currentPlayer: currentPlayer,
+                    namePlayer: player1,
+                    image:
+                        "https://toyshopping.com.br/blog/wp-content/uploads/2021/12/Naruto-Classico-e-Naruto-Shippuden-fillers-1024x576.jpg",
+                  ),
+                  PlayerWidget(
+                    typeButton: player2Type,
+                    currentPlayer: currentPlayer,
+                    namePlayer: player2,
+                    image:
+                        "https://pop.proddigital.com.br/wp-content/uploads/sites/8/2024/04/01-32.jpg",
+                  ),
+                ],
               ),
               const SizedBox(height: 16),
               ElevatedButton(
@@ -238,6 +256,61 @@ class _TicTacToePageState extends State<TicTacToePage> {
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PlayerWidget extends StatelessWidget {
+  final String typeButton;
+  final String currentPlayer;
+  final String namePlayer;
+  final String image;
+  const PlayerWidget(
+      {super.key,
+      required this.typeButton,
+      required this.currentPlayer,
+      required this.namePlayer,
+      required this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color:
+                typeButton == currentPlayer ? Colors.green : Colors.transparent,
+            width: 1.5,
+          ),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              spacing: 5,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: Image.network(
+                    image,
+                    width: 80,
+                    height: 80,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Text(namePlayer),
+                Icon(
+                  typeButton == 'O' ? Icons.circle_outlined : Icons.close,
+                  size: 25,
+                  color: typeButton == 'O' ? Colors.red : Colors.blue,
+                )
+              ],
+            ),
           ),
         ),
       ),
