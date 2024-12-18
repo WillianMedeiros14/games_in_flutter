@@ -17,9 +17,17 @@ class _HomePageState extends State<HomePage> {
 
   String currentPlayer = 'X';
   List<int>? winningLine;
+  int? draggingPiece;
+
+  int get xCount =>
+      board.expand((row) => row).where((cell) => cell == 'X').length;
+  int get oCount =>
+      board.expand((row) => row).where((cell) => cell == 'O').length;
+
+  bool get canAddNewPiece => xCount < 3 || oCount < 3;
 
   void _onCellPress(int row, int col) {
-    if ((board[row][col]) == null) {
+    if (board[row][col] == null && canAddNewPiece) {
       setState(() {
         board[row][col] = currentPlayer;
         currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
@@ -69,7 +77,7 @@ class _HomePageState extends State<HomePage> {
         setState(() {
           winningLine = [i, i + 6];
         });
-        print('Player ${board[0][i]} venceu!');
+
         return;
       }
     }
@@ -86,7 +94,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         winningLine = [0, 8];
       });
-      print('Player ${board[0][0]} venceu!');
+
       return;
     }
   }
@@ -102,14 +110,13 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         winningLine = [2, 6];
       });
-      print('Player ${board[0][2]} venceu!');
+
       return;
     }
   }
 
   void checkDraw() {
     if (board.every((row) => row.every((cell) => cell != null))) {
-      print('Empate!');
       return;
     }
   }
@@ -123,7 +130,29 @@ class _HomePageState extends State<HomePage> {
       ];
       currentPlayer = 'X';
       winningLine = null;
+      draggingPiece = null;
     });
+  }
+
+  void _onDragEnd(int row, int col) {
+    if (draggingPiece != null && board[row][col] == null) {
+      final startRow = draggingPiece! ~/ 3;
+      final startCol = draggingPiece! % 3;
+
+      setState(() {
+        board[row][col] = currentPlayer;
+        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+        board[startRow][startCol] = null;
+        winnerCheck();
+      });
+    }
+    draggingPiece = null;
+  }
+
+  void _onDragStart(int row, int col) {
+    if (board[row][col] == currentPlayer) {
+      draggingPiece = row * 3 + col;
+    }
   }
 
   @override
@@ -149,9 +178,33 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: (context, index) {
                       int row = index ~/ 3;
                       int col = index % 3;
-                      return ButtonsTicTacToe(
-                        typeButton: board[row][col],
-                        onPressed: () => _onCellPress(row, col),
+                      return DragTarget<int>(
+                        onAcceptWithDetails: (details) {
+                          _onDragEnd(row, col);
+                        },
+                        builder: (context, candidateData, rejectedData) {
+                          return Draggable<int>(
+                            data: index,
+                            feedback: ButtonsTicTacToe(
+                              typeButton: board[row][col],
+                              onPressed: () {},
+                            ),
+                            childWhenDragging: ButtonsTicTacToe(
+                              typeButton: null,
+                              onPressed: () {},
+                            ),
+                            child: ButtonsTicTacToe(
+                              typeButton: board[row][col],
+                              onPressed: () => _onCellPress(row, col),
+                            ),
+                            onDragStarted: () {
+                              _onDragStart(
+                                row,
+                                col,
+                              );
+                            },
+                          );
+                        },
                       );
                     },
                   ),
@@ -231,12 +284,14 @@ class WinningLinePainter extends CustomPainter {
 }
 
 class ButtonsTicTacToe extends StatelessWidget {
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
+
   final String? typeButton;
+
   const ButtonsTicTacToe({
     super.key,
     this.typeButton,
-    required this.onPressed,
+    this.onPressed,
   });
 
   @override
@@ -247,15 +302,9 @@ class ButtonsTicTacToe extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
-          ),
-          padding: const EdgeInsets.only(
-            left: 16,
-            bottom: 16,
-            right: 16,
-            top: 16,
           ),
         ),
         child: Center(
