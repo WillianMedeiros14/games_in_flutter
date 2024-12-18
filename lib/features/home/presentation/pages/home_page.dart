@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:games/features/home/presentation/widgets/button_tic_tac_toe_widget.dart';
+import 'package:games/features/home/presentation/widgets/winning_line_painter_wisget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -185,15 +186,15 @@ class _HomePageState extends State<HomePage> {
                         builder: (context, candidateData, rejectedData) {
                           return Draggable<int>(
                             data: index,
-                            feedback: ButtonsTicTacToe(
+                            feedback: ButtonTicTacToe(
                               typeButton: board[row][col],
                               onPressed: () {},
                             ),
-                            childWhenDragging: ButtonsTicTacToe(
+                            childWhenDragging: ButtonTicTacToe(
                               typeButton: null,
                               onPressed: () {},
                             ),
-                            child: ButtonsTicTacToe(
+                            child: ButtonTicTacToe(
                               typeButton: board[row][col],
                               onPressed: () => _onCellPress(row, col),
                             ),
@@ -244,77 +245,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class WinningLinePainter extends CustomPainter {
-  final List<int> line;
-  WinningLinePainter(this.line);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.greenAccent
-      ..strokeWidth = 8
-      ..strokeCap = StrokeCap.round;
-
-    final start = _getOffset(line[0], size);
-    final end = _getOffset(line[1], size);
-
-    canvas.drawLine(start, end, paint);
-  }
-
-  Offset _getOffset(int index, Size size) {
-    final cellWidth = size.width / 3;
-    final cellHeight = size.height / 3;
-    final row = index ~/ 3;
-    final col = index % 3;
-
-    return Offset(
-      (col + 0.5) * cellWidth,
-      (row + 0.5) * cellHeight,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
-}
-
-class ButtonsTicTacToe extends StatelessWidget {
-  final VoidCallback? onPressed;
-
-  final String? typeButton;
-
-  const ButtonsTicTacToe({
-    super.key,
-    this.typeButton,
-    this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 100,
-      height: 100,
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        child: Center(
-          child: typeButton != null
-              ? Icon(
-                  typeButton == 'O' ? Icons.circle_outlined : Icons.close,
-                  size: 45,
-                  color: typeButton == 'O' ? Colors.red : Colors.blue,
-                )
-              : Container(),
         ),
       ),
     );
