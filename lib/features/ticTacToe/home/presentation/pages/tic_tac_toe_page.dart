@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:games/features/home/presentation/widgets/button_tic_tac_toe_widget.dart';
-import 'package:games/features/home/presentation/widgets/winning_line_painter_widget.dart';
+import 'package:games/features/ticTacToe/home/presentation/widgets/button_tic_tac_toe_widget.dart';
+import 'package:games/features/ticTacToe/home/presentation/widgets/winning_line_painter_widget.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class TicTacToePage extends StatefulWidget {
+  const TicTacToePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<TicTacToePage> createState() => _TicTacToePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _TicTacToePageState extends State<TicTacToePage> {
   List<List<String?>> board = [
     [null, null, null],
     [null, null, null],

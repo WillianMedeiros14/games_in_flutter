@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:games/features/home/presentation/pages/home_page.dart';
+import 'package:games/features/listGames/presentation/pages/list_games_page.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -14,10 +14,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Jogo da Velha',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 0, 0, 0)),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const ListGamesPage(),
     );
   }
 }
