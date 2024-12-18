@@ -14,6 +14,15 @@ class _TicTacToeHomePageState extends State<TicTacToeHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Jogo da velha",
+          style: TextStyle(
+            fontSize: 18,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -21,10 +30,6 @@ class _TicTacToeHomePageState extends State<TicTacToeHomePage> {
             child: Column(
               spacing: 16,
               children: [
-                const Text(
-                  "Jogo da velha",
-                  style: TextStyle(fontSize: 16),
-                ),
                 ButtonOptionWidget(
                   icon: Icons.add,
                   title: "Iniciar novo jogo",
