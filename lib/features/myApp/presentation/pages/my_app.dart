@@ -19,6 +19,7 @@ class _MyAppState extends State<MyApp> {
           seedColor: Colors.black,
         ),
         useMaterial3: true,
+        fontFamily: 'Inter',
       ),
       home: const OnboardingPage(),
     );
