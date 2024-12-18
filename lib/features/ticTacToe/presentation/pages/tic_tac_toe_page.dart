@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:games/features/ticTacToe/data/models/tic_tac_toe_page_model.dart';
+
 import 'package:games/features/ticTacToe/presentation/widgets/button_tic_tac_toe_widget.dart';
 import 'package:games/features/ticTacToe/presentation/widgets/player_widget.dart';
 import 'package:games/features/ticTacToe/presentation/widgets/winning_line_painter_widget.dart';
 
 class TicTacToePage extends StatefulWidget {
-  const TicTacToePage({super.key});
+  final TicTacToePageModel infoPlayers;
+
+  const TicTacToePage({
+    super.key,
+    required this.infoPlayers,
+  });
 
   @override
   State<TicTacToePage> createState() => _TicTacToePageState();
@@ -17,12 +24,24 @@ class _TicTacToePageState extends State<TicTacToePage> {
     [null, null, null],
   ];
 
-  final String player1 = "Willian";
-  final String player2 = "Carlos";
-  final String player1Type = "X";
-  final String player2Type = "O";
+  late String player1 = "";
+  late String player2 = "";
+  late String player1Type = "";
+  late String player2Type = "";
 
-  String currentPlayer = 'X';
+  String currentPlayer = '';
+
+  @override
+  void initState() {
+    super.initState();
+
+    player1 = widget.infoPlayers.player1;
+    player2 = widget.infoPlayers.player2;
+    player1Type = widget.infoPlayers.player1Type;
+    player2Type = widget.infoPlayers.player2Type;
+    currentPlayer = widget.infoPlayers.currentPlayerInit;
+  }
+
   List<int>? winningLine;
   int? draggingPiece;
 
@@ -223,19 +242,15 @@ class _TicTacToePageState extends State<TicTacToePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   PlayerWidget(
-                    typeButton: player1Type,
-                    currentPlayer: currentPlayer,
-                    namePlayer: player1,
-                    image:
-                        "https://toyshopping.com.br/blog/wp-content/uploads/2021/12/Naruto-Classico-e-Naruto-Shippuden-fillers-1024x576.jpg",
-                  ),
+                      typeButton: player1Type,
+                      currentPlayer: currentPlayer,
+                      namePlayer: player1,
+                      image: widget.infoPlayers.imagePlayer1),
                   PlayerWidget(
-                    typeButton: player2Type,
-                    currentPlayer: currentPlayer,
-                    namePlayer: player2,
-                    image:
-                        "https://pop.proddigital.com.br/wp-content/uploads/sites/8/2024/04/01-32.jpg",
-                  ),
+                      typeButton: player2Type,
+                      currentPlayer: currentPlayer,
+                      namePlayer: player2,
+                      image: widget.infoPlayers.imagePlayer2),
                 ],
               ),
               const SizedBox(height: 16),
