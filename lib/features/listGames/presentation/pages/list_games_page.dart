@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:games/features/listGames/presentation/widgets/button_list_games_widget.dart';
+import 'package:games/features/ticTacToe/presentation/pages/tic_tac_toe_home_page.dart';
 import 'package:games/features/ticTacToe/presentation/pages/tic_tac_toe_page.dart';
 import 'package:flutter/services.dart';
 
@@ -36,7 +37,7 @@ class _ListGamesPageState extends State<ListGamesPage> {
                   onPressed: () => {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const TicTacToePage(),
+                        builder: (context) => const TicTacToeHomePage(),
                       ),
                     )
                   },
