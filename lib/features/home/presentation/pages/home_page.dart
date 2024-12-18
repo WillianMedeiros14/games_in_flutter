@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:games/features/home/presentation/widgets/button_tic_tac_toe_widget.dart';
-import 'package:games/features/home/presentation/widgets/winning_line_painter_wisget.dart';
+import 'package:games/features/home/presentation/widgets/winning_line_painter_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -33,14 +33,8 @@ class _HomePageState extends State<HomePage> {
         board[row][col] = currentPlayer;
         currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
       });
-      displayBoardInConsole();
-      winnerCheck();
-    }
-  }
 
-  void displayBoardInConsole() {
-    for (var row in board) {
-      print(row.map((e) => e ?? 'null').join(' | '));
+      winnerCheck();
     }
   }
 
