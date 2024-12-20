@@ -20,6 +20,7 @@ class _MyAppState extends State<MyApp> {
         ),
         useMaterial3: true,
         fontFamily: 'Inter',
+        scaffoldBackgroundColor: const Color(0xFFF7F7F7),
       ),
       home: const OnboardingPage(),
     );
