@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:games/features/ticTacToe/data/models/player_model.dart';
 import 'package:games/features/ticTacToe/data/models/tic_tac_toe_page_model.dart';
 import 'package:games/features/ticTacToe/presentation/pages/tic_tac_toe_page.dart';
 import 'package:games/features/ticTacToe/presentation/widgets/button_icon_select_widget.dart';
+import 'package:games/shared/data/payers/list_of_local_players.dart';
 import 'package:games/shared/widget/text_form_field_widget.dart';
 
 class TicTacToeMatchInformationPage extends StatefulWidget {
@@ -19,12 +21,26 @@ class _TicTacToeMatchInformationPageState
   final _inputName1Controller = TextEditingController();
   final _inputName2Controller = TextEditingController();
   final _inputCurrentPlayerInitController = TextEditingController();
+  final _inputImagePlayer1InitController = TextEditingController();
+  final _inputImagePlayer2InitController = TextEditingController();
 
   bool? isValidateSelectionIconInt;
 
   void _realTimeValidation() {
     _formKey.currentState!.validate();
     setState(() {});
+  }
+
+  void _selectIImagePlayer1(String value) {
+    setState(() {
+      _inputImagePlayer1InitController.text = value;
+    });
+  }
+
+  void _selectIImagePlayer2(String value) {
+    setState(() {
+      _inputImagePlayer2InitController.text = value;
+    });
   }
 
   @override
@@ -88,11 +104,17 @@ class _TicTacToeMatchInformationPageState
                   inputNameController: _inputName1Controller,
                   realTimeValidation: _realTimeValidation,
                   typeIcon: 'X',
+                  inputImageController: _inputImagePlayer1InitController,
+                  playerSelected: _inputImagePlayer1InitController.text,
+                  onButtonPressed: _selectIImagePlayer1,
                 ),
                 SectionInfoPlayer(
                   inputNameController: _inputName2Controller,
                   realTimeValidation: _realTimeValidation,
                   typeIcon: 'O',
+                  inputImageController: _inputImagePlayer2InitController,
+                  playerSelected: _inputImagePlayer2InitController.text,
+                  onButtonPressed: _selectIImagePlayer2,
                 ),
                 ButtonIconSelectInitGameWidget(
                   inputCurrentPlayerInitController:
@@ -109,12 +131,10 @@ class _TicTacToeMatchInformationPageState
                         _inputCurrentPlayerInitController.text.isNotEmpty) {
                       TicTacToePageModel ticTacToePageInfo = TicTacToePageModel(
                         player1: _inputName1Controller.text,
-                        imagePlayer1:
-                            "https://static.wikia.nocookie.net/turma-do-kamil/images/5/53/A5f7322cdf21c4de36c7e2c48c926e4c433fe5e4_hq.jpg/revision/latest?cb=20240814003202&path-prefix=pt-br",
+                        imagePlayer1: _inputImagePlayer1InitController.text,
                         player1Type: 'X',
                         player2: _inputName2Controller.text,
-                        imagePlayer2:
-                            'https://pm1.aminoapps.com/6716/1abc6f0137151c387ede9b594745bcc1fce21079_hq.jpg',
+                        imagePlayer2: _inputImagePlayer2InitController.text,
                         player2Type: 'O',
                         currentPlayerInit:
                             _inputCurrentPlayerInitController.text,
@@ -160,18 +180,54 @@ class _TicTacToeMatchInformationPageState
   }
 }
 
-class SectionInfoPlayer extends StatelessWidget {
+class SectionInfoPlayer extends StatefulWidget {
   final String typeIcon;
   final VoidCallback realTimeValidation;
   final TextEditingController inputNameController;
-  const SectionInfoPlayer(
-      {super.key,
-      required this.realTimeValidation,
-      required this.inputNameController,
-      required this.typeIcon});
+  final TextEditingController inputImageController;
+  final String playerSelected;
+  final Function(String) onButtonPressed;
+  const SectionInfoPlayer({
+    super.key,
+    required this.realTimeValidation,
+    required this.inputNameController,
+    required this.typeIcon,
+    required this.playerSelected,
+    required this.onButtonPressed,
+    required this.inputImageController,
+  });
+
+  @override
+  State<SectionInfoPlayer> createState() => _SectionInfoPlayerState();
+}
+
+class _SectionInfoPlayerState extends State<SectionInfoPlayer> {
+  List<PlayerModel> players = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    initializeCharacters();
+  }
+
+  Future<void> initializeCharacters() async {
+    final playersLocal = listOfLocalPlayers
+        .map((players) => PlayerModel.fromMap(players))
+        .toList();
+
+    print(playersLocal[0]);
+
+    setState(() {
+      players = playersLocal;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final width = size.width;
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -185,6 +241,7 @@ class SectionInfoPlayer extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           spacing: 16,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -198,14 +255,14 @@ class SectionInfoPlayer extends StatelessWidget {
                   ),
                 ),
                 Icon(
-                  typeIcon == 'X' ? Icons.close : Icons.circle_outlined,
+                  widget.typeIcon == 'X' ? Icons.close : Icons.circle_outlined,
                   size: 30,
-                  color: typeIcon == 'X' ? Colors.blue : Colors.red,
+                  color: widget.typeIcon == 'X' ? Colors.blue : Colors.red,
                 )
               ],
             ),
             TextFormFieldWidget(
-              controller: inputNameController,
+              controller: widget.inputNameController,
               labelText: 'Nome',
               hintText: 'Nome',
               validator: (value) {
@@ -214,22 +271,81 @@ class SectionInfoPlayer extends StatelessWidget {
                 }
                 return null;
               },
-              onChanged: realTimeValidation,
+              onChanged: widget.realTimeValidation,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(40),
-                  child: Image.network(
-                    "https://static.wikia.nocookie.net/turma-do-kamil/images/5/53/A5f7322cdf21c4de36c7e2c48c926e4c433fe5e4_hq.jpg/revision/latest?cb=20240814003202&path-prefix=pt-br",
-                    width: 80,
-                    height: 80,
-                    fit: BoxFit.cover,
-                  ),
+            const Text(
+              'Selecione uma imagem:',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.black,
+              ),
+            ),
+            if (players.isNotEmpty)
+              Container(
+                height: 100,
+                width: width,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: players.length,
+                  itemBuilder: (context, index) {
+                    final player = players[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Stack(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              widget.inputImageController.text = player.image;
+
+                              widget.onButtonPressed(player.image);
+                            },
+                            child: Column(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(40),
+                                  child: Image.asset(
+                                    player.image,
+                                    width: 80,
+                                    height: 80,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                Text(
+                                  player.name,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          if (widget.playerSelected == player.image)
+                            Positioned(
+                              top: 0,
+                              right: 0,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 2.5,
+                                  ),
+                                ),
+                                child: const Icon(
+                                  Icons.check_circle,
+                                  color: Colors.green,
+                                ),
+                              ),
+                            )
+                        ],
+                      ),
+                    );
+                  },
                 ),
-              ],
-            ),
+              ),
           ],
         ),
       ),

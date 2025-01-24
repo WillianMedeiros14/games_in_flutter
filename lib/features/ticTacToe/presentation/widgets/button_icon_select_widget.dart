@@ -69,10 +69,9 @@ class _ButtonIconSelectInitGameWidgetState
             child: Text(
               'Campo obrigatório',
               style: TextStyle(
-                color: Color.fromARGB(255, 218, 51, 40), // Padrão: Colors.red
-                fontSize: 12, // Padrão: 12sp
+                color: Color.fromARGB(255, 218, 51, 40),
+                fontSize: 12,
                 fontWeight: FontWeight.normal,
-                // Padrão para mensagens de erro
               ),
             ),
           )
