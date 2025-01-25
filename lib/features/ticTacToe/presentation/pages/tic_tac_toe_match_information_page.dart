@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:games/features/ticTacToe/data/models/player_model.dart';
+
 import 'package:games/features/ticTacToe/data/models/tic_tac_toe_page_model.dart';
 import 'package:games/features/ticTacToe/presentation/pages/tic_tac_toe_page.dart';
 import 'package:games/features/ticTacToe/presentation/widgets/button_icon_select_widget.dart';
 import 'package:games/features/ticTacToe/presentation/widgets/section_info_player_widget.dart';
-import 'package:games/shared/data/payers/list_of_local_players.dart';
+
 import 'package:games/shared/widget/text_form_field_widget.dart';
 
 class TicTacToeMatchInformationPage extends StatefulWidget {
