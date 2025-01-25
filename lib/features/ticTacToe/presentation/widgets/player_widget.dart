@@ -5,12 +5,13 @@ class PlayerWidget extends StatelessWidget {
   final String currentPlayer;
   final String namePlayer;
   final String image;
-  const PlayerWidget(
-      {super.key,
-      required this.typeButton,
-      required this.currentPlayer,
-      required this.namePlayer,
-      required this.image});
+  const PlayerWidget({
+    super.key,
+    required this.typeButton,
+    required this.currentPlayer,
+    required this.namePlayer,
+    required this.image,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class PlayerWidget extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(40),
-                  child: Image.network(
+                  child: Image.asset(
                     image,
                     width: 80,
                     height: 80,

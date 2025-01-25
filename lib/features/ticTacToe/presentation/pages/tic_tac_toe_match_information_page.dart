@@ -107,6 +107,7 @@ class _TicTacToeMatchInformationPageState
                   inputImageController: _inputImagePlayer1InitController,
                   playerSelected: _inputImagePlayer1InitController.text,
                   onButtonPressed: _selectIImagePlayer1,
+                  valuePlayerDifferent: _inputImagePlayer2InitController.text,
                 ),
                 SectionInfoPlayer(
                   inputNameController: _inputName2Controller,
@@ -115,6 +116,7 @@ class _TicTacToeMatchInformationPageState
                   inputImageController: _inputImagePlayer2InitController,
                   playerSelected: _inputImagePlayer2InitController.text,
                   onButtonPressed: _selectIImagePlayer2,
+                  valuePlayerDifferent: _inputImagePlayer1InitController.text,
                 ),
                 ButtonIconSelectInitGameWidget(
                   inputCurrentPlayerInitController:
@@ -187,6 +189,8 @@ class SectionInfoPlayer extends StatefulWidget {
   final TextEditingController inputImageController;
   final String playerSelected;
   final Function(String) onButtonPressed;
+  final String valuePlayerDifferent;
+
   const SectionInfoPlayer({
     super.key,
     required this.realTimeValidation,
@@ -195,6 +199,7 @@ class SectionInfoPlayer extends StatefulWidget {
     required this.playerSelected,
     required this.onButtonPressed,
     required this.inputImageController,
+    required this.valuePlayerDifferent,
   });
 
   @override
@@ -215,8 +220,6 @@ class _SectionInfoPlayerState extends State<SectionInfoPlayer> {
     final playersLocal = listOfLocalPlayers
         .map((players) => PlayerModel.fromMap(players))
         .toList();
-
-    print(playersLocal[0]);
 
     setState(() {
       players = playersLocal;
@@ -282,7 +285,7 @@ class _SectionInfoPlayerState extends State<SectionInfoPlayer> {
               ),
             ),
             if (players.isNotEmpty)
-              Container(
+              SizedBox(
                 height: 100,
                 width: width,
                 child: ListView.builder(
@@ -294,34 +297,37 @@ class _SectionInfoPlayerState extends State<SectionInfoPlayer> {
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Stack(
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              widget.inputImageController.text = player.image;
+                          if (widget.valuePlayerDifferent != player.image)
+                            GestureDetector(
+                              onTap: () {
+                                widget.inputImageController.text = player.image;
 
-                              widget.onButtonPressed(player.image);
-                            },
-                            child: Column(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(40),
-                                  child: Image.asset(
-                                    player.image,
-                                    width: 80,
-                                    height: 80,
-                                    fit: BoxFit.cover,
+                                widget.onButtonPressed(player.image);
+                              },
+                              child: Column(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(40),
+                                    child: Image.asset(
+                                      player.image,
+                                      width: 80,
+                                      height: 80,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  player.name,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
+                                  Text(
+                                    player.name,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
+                                ],
+                              ),
+                            )
+                          else
+                            Container(),
                           if (widget.playerSelected == player.image)
                             Positioned(
                               top: 0,
