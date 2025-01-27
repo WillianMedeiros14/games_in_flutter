@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:games/features/ticTacToe/data/models/tic_tac_toe_page_model.dart';
+import 'package:games/features/ticTacToe/presentation/pages/tic_tac_toe_congratulations.dart';
 
 import 'package:games/features/ticTacToe/presentation/widgets/button_tic_tac_toe_widget.dart';
 import 'package:games/features/ticTacToe/presentation/widgets/player_widget.dart';
@@ -71,6 +72,16 @@ class _TicTacToePageState extends State<TicTacToePage> {
     checkDraw();
   }
 
+  void navigateScreenCongratulations() {
+    Future.delayed(Duration(seconds: 1), () {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const TicTacToeCongratulations(),
+        ),
+      );
+    });
+  }
+
   void checkLines() {
     for (int i = 0; i < 3; i++) {
       final String? Line0 = board[i][0];
@@ -81,7 +92,8 @@ class _TicTacToePageState extends State<TicTacToePage> {
         setState(() {
           winningLine = [i * 3, i * 3 + 2];
         });
-        print('Player ${board[i][0]} venceu!');
+
+        navigateScreenCongratulations();
         return;
       }
     }
@@ -98,6 +110,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
           winningLine = [i, i + 6];
         });
 
+        navigateScreenCongratulations();
         return;
       }
     }
@@ -115,6 +128,8 @@ class _TicTacToePageState extends State<TicTacToePage> {
         winningLine = [0, 8];
       });
 
+      navigateScreenCongratulations();
+
       return;
     }
   }
@@ -131,6 +146,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
         winningLine = [2, 6];
       });
 
+      navigateScreenCongratulations();
       return;
     }
   }

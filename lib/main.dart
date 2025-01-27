@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:games/features/myApp/presentation/pages/my_app.dart';
 
 void main() {

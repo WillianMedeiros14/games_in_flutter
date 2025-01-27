@@ -18,6 +18,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         statusBarIconBrightness: Brightness.light,
       ),
     );
+
     return Stack(children: [
       Image.asset(
         'assets/images/bg_onboarding.png',
