@@ -15,10 +15,10 @@ A aplicação oferece uma seleção de jogos básicos, onde o foco principal é 
 - Estudar e implementar animações no Flutter para melhorar a experiência do usuário.
   <br><br>
 
-
 ## ✅ Jogos existenstes e suas regras
 
 ### Jogo da Velha
+
 - O jogo é off-line e é jogado por dois jogadores;
 - Após selecionar o jogo "Jogo da velha", vai abrir uma tela para adicionar as informações dos jogadores;
 - Após adicionar as iformações do josgadores e selecionar quem vai começar "X" ou "O", clique em iniciar par acomeçar;
@@ -26,7 +26,6 @@ A aplicação oferece uma seleção de jogos básicos, onde o foco principal é 
 - Depois que o jogador fizer a terçeira jogada, para fazer a próxima ele deve segurar de onde ele querer tirar e arrastar para onde ele quer jogar;
 - Assim só irão apracer 3 "X" e 3 "O" no tabuleiro;
 - O vencedor é o jogador que conseguir alinhar três símbolos consecutivos, seja na horizontal, vertical ou diagonal.
-
 
 <br>
 
@@ -40,16 +39,19 @@ A aplicação oferece uma seleção de jogos básicos, onde o foco principal é 
     <img alt="Congratulations" title="Congratulations" src="assets/results/congratulations.png" width=230/>
 </h1>
 
+- Publicação no linkedin: **[Postagem](https://www.linkedin.com/posts/williandsmedeiros_flutter-mobile-development-activity-7290079583423418368-3Tcb?utm_source=share&utm_medium=member_desktop)**.
 
 <br>
 
 ## 🎲 Executar
+
 ### Ambiente
+
 - Certifique-se de que tenha o flutter configurado em sua máquina;
 - A versão utilizada nesse projeto é a 3.27.1
 
-
 ### Projeto
+
 1. Clone o repositório e entre na pasta:
 
    ```bash
@@ -64,11 +66,12 @@ A aplicação oferece uma seleção de jogos básicos, onde o foco principal é 
    ```
 
 3. Execute a aplicação:
-- Depois de ter realizado os passos anteriores, pode rodar normalmente o aplicativo. 
+
+- Depois de ter realizado os passos anteriores, pode rodar normalmente o aplicativo.
 
 <br>
 
 ## 🚀 Principais recursos e tecnologias ultilizadas
+
 - **[Flutter](https://flutter.dev/)**.
 - **[Lottie](https://pub.dev/packages/lottie)**.
-
