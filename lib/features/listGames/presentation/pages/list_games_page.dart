@@ -49,17 +49,17 @@ class _ListGamesPageState extends State<ListGamesPage> {
                     )
                   },
                 ),
-                ButtonListGamesWidget(
-                  title: "Sucuri",
-                  pathIcon: 'assets/icons/snake.png',
-                  onPressed: () => {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const TicTacToeHomePage(),
-                      ),
-                    )
-                  },
-                )
+                // ButtonListGamesWidget(
+                //   title: "Sucuri",
+                //   pathIcon: 'assets/icons/snake.png',
+                //   onPressed: () => {
+                //     Navigator.of(context).push(
+                //       MaterialPageRoute(
+                //         builder: (context) => const TicTacToeHomePage(),
+                //       ),
+                //     )
+                //   },
+                // )
               ],
             ),
           ),
