@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:games/features/ticTacToe/data/models/tic_tac_toe_page_model.dart';
+import 'package:games/features/ticTacToe/data/models/winning_player_model.dart';
 import 'package:games/features/ticTacToe/presentation/pages/tic_tac_toe_congratulations.dart';
 
 import 'package:games/features/ticTacToe/presentation/widgets/button_tic_tac_toe_widget.dart';
@@ -43,6 +44,8 @@ class _TicTacToePageState extends State<TicTacToePage> {
     currentPlayer = widget.infoPlayers.currentPlayerInit;
   }
 
+  late InfoWinningPlayerModel winningPlayer;
+
   List<int>? winningLine;
   int? draggingPiece;
 
@@ -72,11 +75,29 @@ class _TicTacToePageState extends State<TicTacToePage> {
     checkDraw();
   }
 
+  void getInfoCurrentPlayer({required String currentPlayerValue}) {
+    print("currentPlayerValue");
+    print(currentPlayerValue);
+    if (currentPlayerValue == 'X') {
+      winningPlayer = InfoWinningPlayerModel(
+          name: widget.infoPlayers.player1,
+          image: widget.infoPlayers.imagePlayer1);
+    } else {
+      winningPlayer = InfoWinningPlayerModel(
+          name: widget.infoPlayers.player2,
+          image: widget.infoPlayers.imagePlayer2);
+    }
+  }
+
   void navigateScreenCongratulations() {
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
+      resetGame();
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => const TicTacToeCongratulations(),
+          builder: (context) => TicTacToeCongratulations(
+            infoPlayers: widget.infoPlayers,
+            winningPlayer: winningPlayer,
+          ),
         ),
       );
     });
@@ -89,6 +110,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
       final String? Line2 = board[i][2];
 
       if (Line0 != null && Line0 == Line1 && Line1 == Line2) {
+        getInfoCurrentPlayer(currentPlayerValue: Line0);
         setState(() {
           winningLine = [i * 3, i * 3 + 2];
         });
@@ -106,6 +128,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
       final String? column2 = board[2][i];
 
       if (column0 != null && column0 == column1 && column1 == column2) {
+        getInfoCurrentPlayer(currentPlayerValue: column0);
         setState(() {
           winningLine = [i, i + 6];
         });
@@ -124,6 +147,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
     if (diagonalMain0 != null &&
         diagonalMain0 == diagonalMain1 &&
         diagonalMain1 == diagonalMain2) {
+      getInfoCurrentPlayer(currentPlayerValue: diagonalMain0);
       setState(() {
         winningLine = [0, 8];
       });
@@ -142,6 +166,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
     if (diagonalSecondary0 != null &&
         diagonalSecondary0 == diagonalSecondary1 &&
         diagonalSecondary1 == diagonalSecondary2) {
+      getInfoCurrentPlayer(currentPlayerValue: diagonalSecondary0);
       setState(() {
         winningLine = [2, 6];
       });
@@ -282,7 +307,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                   ),
                 ),
                 child: const Text(
-                  'Recomeçar Jogo',
+                  'Recomeçar partida',
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.white,

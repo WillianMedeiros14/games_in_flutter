@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:games/features/ticTacToe/data/models/tic_tac_toe_page_model.dart';
+import 'package:games/features/ticTacToe/data/models/winning_player_model.dart';
+import 'package:games/features/ticTacToe/presentation/pages/tic_tac_toe_home_page.dart';
+import 'package:games/features/ticTacToe/presentation/pages/tic_tac_toe_page.dart';
 import 'package:lottie/lottie.dart';
 
 class TicTacToeCongratulations extends StatefulWidget {
-  const TicTacToeCongratulations({super.key});
+  final TicTacToePageModel infoPlayers;
+  final InfoWinningPlayerModel winningPlayer;
+  const TicTacToeCongratulations(
+      {super.key, required this.infoPlayers, required this.winningPlayer});
 
   @override
   State<TicTacToeCongratulations> createState() =>
@@ -114,16 +121,16 @@ class _TicTacToeCongratulationsState extends State<TicTacToeCongratulations> {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(100),
-                                child: Image.network(
-                                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzHv_mPgImMZzJ_WhA-3xGRokBctCc6ia5iw&s",
+                                child: Image.asset(
+                                  widget.winningPlayer.image,
                                   width: 100,
                                   height: 100,
                                   fit: BoxFit.cover,
                                 ),
                               ),
-                              const Text(
-                                "Willian Medeiros",
-                                style: TextStyle(
+                              Text(
+                                widget.winningPlayer.name,
+                                style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.white,
@@ -134,7 +141,15 @@ class _TicTacToeCongratulationsState extends State<TicTacToeCongratulations> {
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => TicTacToePage(
+                                infoPlayers: widget.infoPlayers,
+                              ),
+                            ),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFECAC4C),
                           padding: const EdgeInsets.symmetric(
@@ -152,7 +167,20 @@ class _TicTacToeCongratulationsState extends State<TicTacToeCongratulations> {
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          final navigator = Navigator.of(context);
+
+                          navigator.pop();
+                          navigator.pop();
+                          navigator.pop();
+
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const TicTacToeHomePage(),
+                            ),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green,
                           padding: const EdgeInsets.symmetric(
